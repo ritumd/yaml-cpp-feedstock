@@ -7,11 +7,9 @@ package:
 source:
   url: https://github.com/jbeder/yaml-cpp/archive/yaml-cpp-{{ version }}.tar.gz
   sha256: 77ea1b90b3718aa0c324207cb29418f5bced2354c2e483a9523d98c3460af1ed
-  patches:
-    - pkgconfig.patch  # [win]
 
 build:
-  number: 4
+  number: 1
   run_exports:
     - {{ pin_subpackage('yaml-cpp', max_pin='x.x') }}
 
@@ -19,7 +17,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - cmake
+    - cmake {{cmake}}
     - ninja
 
 test:
@@ -28,23 +26,20 @@ test:
   requires:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - cmake
+    - cmake {{cmake}}
     - ninja
   commands:
     - test -f $PREFIX/lib/libyaml-cpp.so  # [not win]
-    - if not exist %LIBRARY_BIN%\\yaml-cpp.dll exit 1  # [win]
 
 outputs:
   - name: yaml-cpp
   - name: yaml-cpp-static
     script: build_static.sh  # [not win]
-    build:
-      skip: true  # [win]
     requirements:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
-        - cmake
+        - cmake {{cmake}}
         - ninja
       host:
         - {{ pin_subpackage('yaml-cpp', exact=True) }}
@@ -65,8 +60,4 @@ about:
 
 extra:
   recipe-maintainers:
-    - allanleal
-    - marcelotrevisani
-    - tadeu
-    - seanyen
-    - wolfv
+    - open-ce/open-ce-dev-team
