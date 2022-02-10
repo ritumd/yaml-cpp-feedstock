@@ -18,7 +18,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake {{cmake}}
-    - ninja
+    - ninja {{ninja}}
 
 test:
   files:
@@ -27,7 +27,7 @@ test:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake {{cmake}}
-    - ninja
+    - ninja {{ninja}}
   commands:
     - test -f $PREFIX/lib/libyaml-cpp.so  # [not win]
 
@@ -40,7 +40,7 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake {{cmake}}
-        - ninja
+        - ninja {{ninja}}
       host:
         - {{ pin_subpackage('yaml-cpp', exact=True) }}
       run:
